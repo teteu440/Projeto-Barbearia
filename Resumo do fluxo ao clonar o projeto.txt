@@ -1,0 +1,6 @@
+Resumo do fluxo ao clonar o projeto em outra máquina:
+
+Criar e ativar o venv: python -m venv ./venv e depois venv\Scripts\activate
+Instalar dependências: pip install -r requirements.txt, django e dotenv
+Criar o banco: python manage.py migrate
+Rodar: python manage.py runserver
