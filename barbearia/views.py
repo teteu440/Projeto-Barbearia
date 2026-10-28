@@ -6,7 +6,7 @@ from .models import Cliente, Barbeiro, Servico
 
 
 def index(request):
-    return HttpResponse('<h1>Sistema de Gerenciamento de Barbearia</h1>')
+    return HttpResponse(cadastro_cliente)
 
 
 def cadastro_cliente(request):
