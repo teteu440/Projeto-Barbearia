@@ -1,0 +1,14 @@
+{% extends 'barbearia/base.html' %}
+{% block title %}Entrar{% endblock %}
+{% block content %}
+<div class="card narrow">
+  <h1>Entrar</h1>
+  <p class="subtitle">Acesso restrito aos funcionários</p>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% include 'barbearia/_fields.html' %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button class="btn btn-block" type="submit">Entrar</button>
+  </form>
+</div>
+{% endblock %}

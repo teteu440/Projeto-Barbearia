@@ -1,0 +1,15 @@
+{% extends 'barbearia/base.html' %}
+{% block title %}Excluir {{ nome|lower }}{% endblock %}
+{% block content %}
+<div class="card narrow">
+  <h1>Excluir {{ nome|lower }}</h1>
+  <p>Tem certeza de que deseja excluir <strong>{{ object }}</strong>? Esta ação não pode ser desfeita.</p>
+  <form method="post">
+    {% csrf_token %}
+    <div class="actions">
+      <button class="btn btn-danger" type="submit">Sim, excluir</button>
+      <a class="btn btn-secondary" href="{{ lista_url }}">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

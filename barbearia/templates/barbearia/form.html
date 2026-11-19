@@ -1,0 +1,15 @@
+{% extends 'barbearia/base.html' %}
+{% block title %}{% if object %}Editar{% else %}Novo{% endif %} {{ nome|lower }}{% endblock %}
+{% block content %}
+<div class="card narrow">
+  <h1>{% if object %}Editar {{ nome|lower }}{% else %}Novo {{ nome|lower }}{% endif %}</h1>
+  <p class="subtitle">Preencha os dados abaixo</p>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% include 'barbearia/_fields.html' %}
+    <button class="btn btn-block" type="submit">{% if object %}Salvar alterações{% else %}Cadastrar{% endif %}</button>
+    <div class="actions"><a class="btn btn-secondary btn-block" style="text-align:center" href="{{ lista_url }}">Cancelar</a></div>
+  </form>
+</div>
+{% endblock %}

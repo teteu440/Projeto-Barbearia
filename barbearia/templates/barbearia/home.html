@@ -1,0 +1,56 @@
+{% extends 'barbearia/base.html' %}
+{% block title %}Início{% endblock %}
+{% block content %}
+<h1>Painel</h1>
+
+<div class="stats">
+  <a class="stat" href="{% url 'agendamento_list' %}"><div class="n">{{ total_hoje }}</div><div class="l">Agendamentos hoje</div></a>
+  <a class="stat" href="{% url 'cliente_list' %}"><div class="n">{{ total_clientes }}</div><div class="l">Clientes</div></a>
+  <a class="stat" href="{% url 'barbeiro_list' %}"><div class="n">{{ total_barbeiros }}</div><div class="l">Barbeiros</div></a>
+  <a class="stat" href="{% url 'servico_list' %}"><div class="n">{{ total_servicos }}</div><div class="l">Serviços</div></a>
+</div>
+
+<div class="card" style="margin-bottom:24px">
+  <div class="page-head">
+    <h2>Próximos agendamentos</h2>
+    <a class="btn btn-sm" href="{% url 'agendamento_create' %}">+ Novo agendamento</a>
+  </div>
+  {% if proximos %}
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Quando</th><th>Cliente</th><th>Serviço</th><th>Barbeiro</th></tr></thead>
+      <tbody>
+        {% for a in proximos %}
+        <tr>
+          <td>{{ a.inicio|date:"d/m H:i" }}</td><td>{{ a.cliente }}</td><td>{{ a.servico }}</td><td>{{ a.barbeiro }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="empty">Nenhum agendamento futuro.</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <div class="page-head">
+    <h2>Últimos clientes cadastrados</h2>
+    <a class="btn btn-sm" href="{% url 'cliente_create' %}">+ Novo cliente</a>
+  </div>
+  {% if ultimos_clientes %}
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Nome</th><th>Telefone</th><th>Cadastrado em</th></tr></thead>
+      <tbody>
+        {% for c in ultimos_clientes %}
+        <tr><td>{{ c.nome }}</td><td>{{ c.telefone }}</td><td>{{ c.criado_em|date:"d/m/Y H:i" }}</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="empty">Nenhum cliente cadastrado ainda.</p>
+  {% endif %}
+</div>
+{% endblock %}

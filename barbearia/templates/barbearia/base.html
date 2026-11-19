@@ -1,0 +1,41 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Barbearia{% endblock %} · Barbearia</title>
+  <link rel="stylesheet" href="{% static 'barbearia/css/style.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="inner">
+      <a class="brand" href="{% url 'home' %}">✂ Barbearia</a>
+      {% if user.is_authenticated %}
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="{% url 'home' %}" {% if nav_ativa == 'home' %}class="active"{% endif %}>Início</a>
+        <a href="{% url 'agendamento_list' %}" {% if nav_ativa == 'agendamentos' %}class="active"{% endif %}>Agenda</a>
+        <a href="{% url 'cliente_list' %}" {% if nav_ativa == 'clientes' %}class="active"{% endif %}>Clientes</a>
+        <a href="{% url 'barbeiro_list' %}" {% if nav_ativa == 'barbeiros' %}class="active"{% endif %}>Barbeiros</a>
+        <a href="{% url 'servico_list' %}" {% if nav_ativa == 'serviços' %}class="active"{% endif %}>Serviços</a>
+        <form method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit">Sair ({{ user.get_username }})</button>
+        </form>
+      </nav>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="container">
+    {% if messages %}
+    <ul class="messages" role="status">
+      {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% extends 'barbearia/base.html' %}
+{% block title %}Avisar cliente{% endblock %}
+{% block content %}
+<div class="card narrow" style="max-width:640px">
+  <h1>Avisar o cliente</h1>
+  <p class="subtitle">
+    {{ agendamento.cliente.nome }} · {{ agendamento.cliente.telefone }}
+    {% if agendamento.cliente.email %}· {{ agendamento.cliente.email }}{% endif %}
+  </p>
+
+  <label for="msg">Mensagem</label>
+  <textarea id="msg" rows="11" readonly>{{ mensagem }}</textarea>
+
+  <div class="actions" style="flex-wrap:wrap">
+    {% if whatsapp_url %}
+    <a class="btn" href="{{ whatsapp_url }}" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+    {% else %}
+    <span class="btn btn-secondary" aria-disabled="true" title="Telefone inválido">WhatsApp indisponível</span>
+    {% endif %}
+
+    {% if agendamento.cliente.email %}
+    <form method="post" style="margin:0">
+      {% csrf_token %}
+      <button class="btn btn-secondary" type="submit">Enviar por e-mail</button>
+    </form>
+    {% else %}
+    <span class="btn btn-secondary" aria-disabled="true" title="Cliente sem e-mail">E-mail indisponível</span>
+    {% endif %}
+
+    <button class="btn btn-secondary" type="button" id="copiar">Copiar mensagem</button>
+  </div>
+
+  <p style="margin-top:24px"><a href="{{ agenda_url }}">← Voltar para a agenda</a></p>
+</div>
+
+<script>
+  document.getElementById('copiar').addEventListener('click', function () {
+    var botao = this, texto = document.getElementById('msg').value;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(texto).then(function () { botao.textContent = 'Copiado ✓'; });
+    } else {
+      document.getElementById('msg').select();
+      document.execCommand('copy');
+      botao.textContent = 'Copiado ✓';
+    }
+  });
+</script>
+{% endblock %}
